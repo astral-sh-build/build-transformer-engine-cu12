@@ -2,17 +2,15 @@
 
 Pre-built CUDA 12 core wheels for
 [NVIDIA Transformer Engine](https://github.com/NVIDIA/TransformerEngine), across
-Python versions and CPU architectures.
+CUDA versions and CPU architectures.
 
 ## Installation
 
 Following the PyTorch convention, artifacts are published to a separate index
-for each CUDA version. Each architecture-specific CUDA 12 core wheel uses
-the same CUDA and PyTorch local version as its corresponding metapackage and
-PyTorch extension. For example,
-`transformer_engine_cu12-2.16.0+cu.12.8.torch.2.10-py3-none-manylinux_2_28_x86_64.whl`
-matches the CUDA 12.8, PyTorch 2.10 extension. Core wheels are shared across
-Python versions.
+for each CUDA version. Each architecture-specific CUDA 12 core wheel has a CUDA
+local version and is shared across PyTorch and Python versions. For example,
+`transformer_engine_cu12-2.16.0+cu.12.8-py3-none-manylinux_2_28_x86_64.whl`
+provides the CUDA 12.8 core for every supported PyTorch version.
 
 Once released, pre-built wheels will be available on
 [Astral's GPU indexes](https://wheels.astral.sh/index.html).
@@ -43,9 +41,10 @@ Or, with `uv pip`:
 $ uv pip install --index https://wheels.astral.sh/simple/cu128/ 'transformer-engine[pytorch]'
 ```
 
-The core, metapackage, and PyTorch extension share their complete version, so
-NVIDIA's original version checks and Python files work without compatibility
-patches regardless of installation order.
+The core and metapackage apply the same compatibility patch so NVIDIA's version
+checks compare the public Transformer Engine version rather than the CUDA and
+PyTorch local versions. The packages remain compatible regardless of
+installation order.
 
 ## Supported versions
 
@@ -67,10 +66,9 @@ Wheels can be built for the following NVIDIA Transformer Engine versions:
 - [`2.3.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.3)
 - [`2.2.1`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.2.1)
 
-The native CUDA core is built once per CUDA version and CPU architecture. Each
-build then produces a separately versioned wheel for every supported PyTorch
-version, reusing the same compiled native libraries, prebuilt PyTorch CUDA
-manylinux image, and build matrix.
+The native CUDA core is built once per CUDA version and CPU architecture using
+the corresponding pre-built PyTorch CUDA manylinux image. The resulting wheel
+is independent of the PyTorch and Python versions.
 
 ## License
 
