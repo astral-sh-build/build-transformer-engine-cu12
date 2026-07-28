@@ -48,20 +48,9 @@ installation order.
 
 ## Supported versions
 
-Wheels can be built for NVIDIA Transformer Engine 2.5 and newer:
+Wheels can be built for NVIDIA Transformer Engine 2.16.0:
 
 - [`2.16.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.16)
-- [`2.15.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.15)
-- [`2.14.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.14)
-- [`2.13.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.13)
-- [`2.12.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.12)
-- [`2.11.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.11)
-- [`2.10.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.10)
-- [`2.9.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.9)
-- [`2.8.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.8)
-- [`2.7.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.7)
-- [`2.6.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.6)
-- [`2.5.0`](https://github.com/NVIDIA/TransformerEngine/releases/tag/v2.5)
 
 The native CUDA core is built once per CUDA version and CPU architecture using
 the corresponding pre-built PyTorch CUDA manylinux image. The resulting wheel
