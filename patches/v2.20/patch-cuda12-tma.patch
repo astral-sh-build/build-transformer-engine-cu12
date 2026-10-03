@@ -1,0 +1,15 @@
+--- a/transformer_engine/common/util/ptx.cuh
++++ b/transformer_engine/common/util/ptx.cuh
+@@ -239,7 +239,12 @@
+   uint32_t dst_shmem_ptr = __cvta_generic_to_shared(dst_shmem);
+   uint32_t mbar_ptr = __cvta_generic_to_shared(mbar);
+   asm volatile(
++#if CUDA_VERSION >= 12080
+       "cp.async.bulk.tensor.2d.shared::cta.global.tile"
++#else
++      // PTX before 8.6 uses the cluster destination even for the local CTA.
++      "cp.async.bulk.tensor.2d.shared::cluster.global.tile"
++#endif
+       ".mbarrier::complete_tx::bytes [%0], [%1, {%2, %3}], [%4];" ::"r"(dst_shmem_ptr),
+       "l"(tensor_map_ptr), "r"(offset_x), "r"(offset_y), "r"(mbar_ptr)
+       : "memory");

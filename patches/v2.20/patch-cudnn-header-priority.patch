@@ -1,0 +1,19 @@
+--- a/transformer_engine/common/cmake/cuDNN.cmake
++++ b/transformer_engine/common/cmake/cuDNN.cmake
+@@ -8,6 +8,8 @@
+ message(STATUS "cuDNN: Searching for pre-built libraries")
+ 
+ add_library(CUDNN::cudnn_all INTERFACE IMPORTED)
++# Prefer the selected cuDNN headers over older headers in CUDA images.
++set_property(TARGET CUDNN::cudnn_all PROPERTY SYSTEM FALSE)
+ 
+ find_path(
+     CUDNN_INCLUDE_DIR cudnn.h
+@@ -73,6 +75,7 @@
+         add_library(CUDNN::${NAME} UNKNOWN IMPORTED)
+         set_target_properties(
+             CUDNN::${NAME} PROPERTIES
++            SYSTEM FALSE
+             INTERFACE_INCLUDE_DIRECTORIES ${CUDNN_INCLUDE_DIR}
+             IMPORTED_LOCATION ${${NAME}_LIBRARY}
+         )
