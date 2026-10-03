@@ -1,9 +1,10 @@
 #!/bin/bash
-# NCCL EP is enabled by default in Transformer Engine 2.17 and newer.
+# NCCL EP requires CUDA 13; keep the CUDA 12 core build on the supported path.
 set -euxo pipefail
 
 platform=$1
 cuda_major=$2
+export NVTE_WITH_NCCL_EP=0
 python=/opt/python/cp310-cp310/bin/python
 "${python}" -m pip install "nvidia-nccl-cu${cuda_major}==2.30.7"
 NCCL_HOME=$("${python}" -c 'import nvidia.nccl; print(next(iter(nvidia.nccl.__path__)))')
