@@ -320,9 +320,18 @@ def main() -> None:
     rows = list(grouped_rows.values())
 
     # For pull requests, build a single representative CUDA core wheel.
-    # Temporarily validate the full release matrix after the CUDA 12 failure.
     if os.environ.get("LIMIT_MATRIX") == "1":
-        pass
+        smoke_cuda_version = "12.8"
+        rows = [
+            next(
+                row
+                for row in rows
+                if row["MANYLINUX_CUDA_VERSION"] == smoke_cuda_version
+                and row["target-arch"] == "x86_64"
+            )
+        ]
+        # Pull-request wheels are validated on an H100; releases retain every SM.
+        rows[0]["NVTE_CUDA_ARCHS"] = "90"
 
     print(json.dumps(rows))
 
