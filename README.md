@@ -49,7 +49,7 @@ installation order.
 
 Wheels can be built for NVIDIA Transformer Engine 2.20.0:
 
-- [`2.20.0`](https://github.com/astral-sh-build/build-transformer-engine-cu12/releases/tag/v2.20)
+- [`2.20.0`](https://github.com/astral-sh-build/build-transformer-engine-cu12/releases/tag/v2.20-r1)
 
 The native CUDA core is built once per CUDA version and CPU architecture using
 the corresponding pre-built PyTorch CUDA manylinux image. The resulting wheel is
