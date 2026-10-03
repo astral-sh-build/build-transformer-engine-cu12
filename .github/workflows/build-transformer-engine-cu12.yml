@@ -55,7 +55,7 @@ jobs:
           LIMIT_MATRIX: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'full-build') && '1' || '0' }}
 
   build-wheel:
-    name: Build CUDA 12 core wheel (CUDA ${{ matrix.MANYLINUX_CUDA_VERSION }}, ${{ matrix.target-arch }})
+    name: Build CUDA 12 core wheel (${{ matrix.AUDIT_SOURCE_VERSION }}, CUDA ${{ matrix.MANYLINUX_CUDA_VERSION }}, ${{ matrix.target-arch }})
     needs: [plan-matrix]
     runs-on: ${{ matrix.RUNNER }}
     if: ${{ !contains(github.event.pull_request.labels.*.name, 'no-build') }}
@@ -73,13 +73,14 @@ jobs:
           if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
             TRANSFORMER_ENGINE_VERSION=$(sed -E 's/-r[0-9]+$//' <<<"${INPUTS_RELEASE_TAG}")
           else
-            TRANSFORMER_ENGINE_VERSION="v2.20"
+            TRANSFORMER_ENGINE_VERSION="${AUDIT_SOURCE_VERSION}"
           fi
           echo "version=${TRANSFORMER_ENGINE_VERSION}" >> "$GITHUB_OUTPUT"
           echo "Using TransformerEngine source version: ${TRANSFORMER_ENGINE_VERSION}"
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           INPUTS_RELEASE_TAG: ${{ inputs.release_tag }}
+          AUDIT_SOURCE_VERSION: ${{ matrix.AUDIT_SOURCE_VERSION }}
 
       - name: Checkout TransformerEngine
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
